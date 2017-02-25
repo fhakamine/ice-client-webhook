@@ -6,12 +6,10 @@
   "keywords": ["api.ai", "natural language"],
   "env": {
   "TENANT_URL": {
-    "description": "Your tenant url including the https protocol. For example: https://example.octopus.com",
-    "required": true
+    "description": "Your tenant url including the https protocol. For example: https://example.octopus.com"
   },
   "API_KEY": {
-    "description": "The API key used by the webook to connect your tenant",
-    "required": true
+    "description": "The API key used by the webook to connect your tenant"
   }
 },
 }
