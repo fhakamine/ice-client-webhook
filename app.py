@@ -61,11 +61,13 @@ def addUser(req):
     #header
     headers = { 'accept': "application/json", 'content-type': "application/json", 'authorization': "SSWS "+key }
 
+    print('Before request')
     #request
     req = urllib2.Request(url, data, headers)
+    print('After request')
 
     #perform the rest api call
-    result = urlopen(yql_url)
+    result = urlopen(req)
     result2 = result.read()
     responsecode = result.getcode()
     data = json.loads(result2)
