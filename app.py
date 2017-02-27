@@ -33,7 +33,7 @@ def webhook():
         res = modUser(req)
     elif action == "resetUser":
         res = resetUser(req)
-    else
+    else:
         return {}
 
     res = json.dumps(res, indent=4)
