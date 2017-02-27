@@ -26,7 +26,15 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
+    action = req.get("result").get("action")
+    if action == "addUser":
+        res = addUser(req)
+    elif action == "modUser":
+        res = modUser(req)
+    elif action == "resetUser":
+        res = resetUser(req)
+    else
+        return {}
 
     res = json.dumps(res, indent=4)
     # print(res)
@@ -35,10 +43,7 @@ def webhook():
     return r
 
 
-def processRequest(req):
-    #define what to do based on the action parameter
-    if req.get("result").get("action") != "yahooWeatherForecast":
-        return {}
+def addUser(req):
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = makeYqlQuery(req)
     if yql_query is None:
@@ -50,6 +55,31 @@ def processRequest(req):
     res = makeWebhookResult(data)
     return res
 
+def modUser(req):
+    #define what to do based on the action parameter
+    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    yql_query = makeYqlQuery(req)
+    if yql_query is None:
+        return {}
+    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    #perform the rest api call
+    result = urlopen(yql_url).read()
+    data = json.loads(result)
+    res = makeWebhookResult(data)
+    return res
+
+def resetUser(req):
+    #define what to do based on the action parameter
+    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    yql_query = makeYqlQuery(req)
+    if yql_query is None:
+        return {}
+    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    #perform the rest api call
+    result = urlopen(yql_url).read()
+    data = json.loads(result)
+    res = makeWebhookResult(data)
+    return res
 
 def makeYqlQuery(req):
     result = req.get("result")
