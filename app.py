@@ -62,6 +62,12 @@ def addUser(req):
     headers = { 'accept': "application/json", 'content-type': "application/json", 'authorization': "SSWS "+key }
 
     print('Before request')
+    print('headers')
+    print(headers)
+    print('payload')
+    print(data)
+    print('URL')
+    print(url)
     #request
     req = urllib2.Request(url, data, headers)
     print('After request')
