@@ -60,6 +60,7 @@ def addUser(req):
 
     #header
     headers = "{ 'accept': 'application/json', 'content-type': 'application/json', 'authorization': 'SSWS "+key+"'}"
+    headersdata = json.dumps(headers);
 
     print('Before request')
     print('headers')
@@ -69,7 +70,7 @@ def addUser(req):
     print('URL')
     print(url)
     #request
-    req = urllib2.Request(url, data, headers)
+    req = urllib2.Request(url, data, headersdata)
     print('After request')
 
     #perform the rest api call
