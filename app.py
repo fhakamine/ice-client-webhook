@@ -44,16 +44,50 @@ def webhook():
 
 
 def addUser(req):
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    baseurl = "https://oktaice612-admin.oktapreview.com"
+    key = "00KKwYAyt72aImR9sU-JOMAJuB3VULUFXMD4BzC32f"
+    url = baseurl+"/api/v1/users?activate=false";
+
+    result = req.get("result")
+    parameters = result.get("parameters")
+    firstName = parameters.get("given-name")
+    lastName = parameters.get("last-name")
+    email = parameters.get("email")
+
+    # user data
+    payload = "{'profile': { 'firstName': '"+firstName+"', 'lastName': '"+lastName+"', 'email': '"+email+"', 'login': '"+email+"'}}"
+    data = json.dumps(payload);
+
+    #header
+    headers = { 'accept': "application/json", 'content-type': "application/json", 'authorization': "SSWS "+key }
+
+    #request
+    req = urllib2.Request(url, data, headers)
+
     #perform the rest api call
-    result = urlopen(yql_url).read()
-    data = json.loads(result)
+    result = urlopen(yql_url)
+    result2 = result.read()
+    responsecode = result.getcode()
+    data = json.loads(result2)
     res = makeWebhookResult(data)
-    return res
+    print data
+
+    if responsecode == 200:
+        speech = "User created"
+    else:
+        speech = "Error "+responsecode
+
+    # print(json.dumps(item, indent=4))
+    print("Response:")
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-user-webhook-sample"
+    }
 
 def modUser(req):
     #define what to do based on the action parameter
