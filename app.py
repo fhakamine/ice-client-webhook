@@ -59,7 +59,7 @@ def addUser(req):
     data = json.dumps(payload);
 
     #header
-    headers = { 'accept': "application/json", 'content-type': "application/json", 'authorization': "SSWS "+key }
+    headers = "{ 'accept': 'application/json', 'content-type': 'application/json', 'authorization': 'SSWS "+key+"'}"
 
     print('Before request')
     print('headers')
