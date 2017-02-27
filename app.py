@@ -69,8 +69,7 @@ def addUser(req):
     result2 = result.read()
     responsecode = result.getcode()
     data = json.loads(result2)
-    res = makeWebhookResult(data)
-    print data
+    print(data)
 
     if responsecode == 200:
         speech = "User created"
