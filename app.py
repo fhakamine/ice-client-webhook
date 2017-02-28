@@ -56,11 +56,11 @@ def addUser(req):
 
     # user data
     payload = "{'profile': { 'firstName': '"+firstName+"', 'lastName': '"+lastName+"', 'email': '"+email+"', 'login': '"+email+"'}}"
-    data = json.dumps(payload);
+    data = json.dumps(payload)
 
     #header
     headers = "{ 'accept': 'application/json', 'content-type': 'application/json', 'authorization': 'SSWS "+key+"'}"
-    headersdata = json.dumps(headers);
+    headersdata = json.dumps(headers)
 
     print('Before request')
     print('headers')
