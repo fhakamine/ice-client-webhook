@@ -46,7 +46,7 @@ def webhook():
 def addUser(req):
     baseurl = "https://oktaice612-admin.oktapreview.com"
     key = "00KKwYAyt72aImR9sU-JOMAJuB3VULUFXMD4BzC32f"
-    url = baseurl+"/api/v1/users?activate=false"
+    url = baseurl+"/api/v1/users?activate=true"
 
     result = req.get("result")
     parameters = result.get("parameters")
@@ -64,7 +64,7 @@ def addUser(req):
 
     print('Before request')
     print('headers')
-    print(headers)
+    print(headersdata)
     print('payload')
     print(data)
     print('URL')
