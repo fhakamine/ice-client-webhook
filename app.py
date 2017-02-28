@@ -55,7 +55,7 @@ def addUser(req):
     email = parameters.get("email")
 
     # user data
-    payload = "{'profile': { 'firstName': '"+firstName+"', 'lastName': '"+lastName+"', 'email': '"+email+"', 'login': '"+email+"'}}"
+    payload = "{ 'profile': { 'firstName': '"+firstName+"', 'lastName': '"+lastName+"', 'email': '"+email+"', 'login': '"+email+"'} }"
     data = json.dumps(payload)
 
     #header
