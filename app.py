@@ -4,12 +4,14 @@ from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
 
-from urllib.parse import urlparse, urlencode
-from urllib.request import urlopen, Request
-from urllib.error import HTTPError
+#from urllib.parse import urlparse, urlencode
+#from urllib.request import urlopen, Request
+#from urllib.error import HTTPError
 
 import json
 import os
+import urllib2
+import requests
 
 from flask import Flask
 from flask import request
@@ -44,9 +46,9 @@ def webhook():
 
 
 def addUser(req):
-    baseurl = "https://oktaice612--admin-oktapreview-com-ep69yegp80gu.runscope.net"
-    key = "00KKwYAyt72aImR9sU-JOMAJuB3VULUFXMD4BzC32f"
-    url = baseurl+"/api/v1/users?activate=true"
+    baseurl = "https://frederico-oktapreview-com-ep69yegp80gu.runscope.net/"
+    key = "00McAPc46ptAbr4LnL3Gh7dwgutP4peA9u3A1xCH7c"
+    url = baseurl+"/api/v1/users"
 
     result = req.get("result")
     parameters = result.get("parameters")
@@ -54,36 +56,37 @@ def addUser(req):
     lastName = parameters.get("last-name")
     email = parameters.get("email")
 
-    # user data
-    payload = "{ 'profile': { 'firstName': '"+firstName+"', 'lastName': '"+lastName+"', 'email': '"+email+"', 'login': '"+email+"'} }"
-    data = json.dumps(payload)
+    querystring = {"activate":"true"}
 
-    #header
-    headers = "{ 'accept': 'application/json', 'content-type': 'application/json', 'authorization': 'SSWS "+key+"'}"
-    headersdata = json.dumps(headers)
+    payload = {
+        'profile': {
+            'firstName': firstName,
+            'lastName': lastName,
+            'email': email,
+            'login': email
+            }
+        }
+    headers = {
+        'accept': "application/json",
+        'content-type': "application/json",
+        'authorization': "SSWS "+key
+        }
 
-    print('Before request')
-    print('headers')
-    print(headersdata)
-    print('payload')
-    print(data)
-    print('URL')
-    print(url)
-    #request
-    req = urllib.Request(url, data, headersdata)
+    response = requests.post(url, json=payload, headers=headers, params=querystring)
+
+    print(response.text)
     print('After request')
 
     #perform the rest api call
-    result = urlopen(req)
-    result2 = result.read()
-    responsecode = result.getcode()
-    data = json.loads(result2)
+    responsecode = response.status_code
+    data = response.json()
     print(data)
 
     if responsecode == 200:
         speech = "User created"
     else:
-        speech = "Error "+responsecode
+        speech = "Error "+str(responsecode)
+        #{"errorCode":"E0000001","errorSummary":"Api validation failed: login","errorLink":"E0000001","errorId":"oaeRG1lUiGZTPeCWKfB2s6avw","errorCauses":[{"errorSummary":"login: An object with this field already exists in the current organization"}]}
 
     # print(json.dumps(item, indent=4))
     print("Response:")
@@ -103,9 +106,9 @@ def modUser(req):
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
-    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    yql_url = baseurl + urllib2.urlencode({'q': yql_query}) + "&format=json"
     #perform the rest api call
-    result = urlopen(yql_url).read()
+    result = urllib2.urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
@@ -116,9 +119,9 @@ def resetUser(req):
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
-    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    yql_url = baseurl + urllib2.urlencode({'q': yql_query}) + "&format=json"
     #perform the rest api call
-    result = urlopen(yql_url).read()
+    result = urllib2.urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
     return res
