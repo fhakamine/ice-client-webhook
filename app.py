@@ -27,7 +27,7 @@ def webhook():
 
     print("Request:")
     print(json.dumps(req, indent=4))
-    
+
     #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
     if action == "addUser":
@@ -47,8 +47,8 @@ def webhook():
 
 
 def addUser(req):
-    baseurl = "https://frederico-oktapreview-com-ep69yegp80gu.runscope.net/"
-    key = "00McAPc46ptAbr4LnL3Gh7dwgutP4peA9u3A1xCH7c"
+    baseurl = os.environ.get('TENANT_URL')
+    key = os.environ.get('API_KEY')
     url = baseurl+"/api/v1/users"
 
     result = req.get("result")
