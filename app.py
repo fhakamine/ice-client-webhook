@@ -27,7 +27,8 @@ def webhook():
 
     print("Request:")
     print(json.dumps(req, indent=4))
-
+    
+    #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
     if action == "addUser":
         res = addUser(req)
