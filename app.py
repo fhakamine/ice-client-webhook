@@ -90,7 +90,7 @@ def addUser(req):
     print(data)
 
     if responsecode == 200:
-        speech = "User created"
+        speech = ""
     else:
         speech = "Error "+str(responsecode)
 
@@ -105,7 +105,7 @@ def modUser(req):
 
 #for resetting users
 def resetUser(req):
-    speech = "Ops... I don't know how to reset a user yet."
+    speech = "Ops... I don't know how to reset users yet."
     return speech
 
 if __name__ == '__main__':
