@@ -51,7 +51,7 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-#for creating new users
+#for creating new users in Okta
 def addUser(req):
     baseurl = os.environ.get('TENANT_URL')
     key = os.environ.get('API_KEY')
