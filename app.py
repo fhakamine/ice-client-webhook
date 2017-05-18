@@ -89,12 +89,12 @@ def readPromos(req):
     data = response.json()
     print(data)
 
-    for promo in data:
-        print("promo: ");
-        print(promo);
+    #for promo in data:
+        #print("promo code: ");
+        #print(promo);
 
     if responsecode == 200:
-        speech = "We a special promo. "+data[0].description+". To get this promo, go to ice.cream.io and enter the code "+ data[0].code
+        speech = "We a special promo. "+data[0].get("description")+". To get this promo, go to ice.cream.io and enter the code "+ data[0].get("code")
     else:
         speech = "Error "+str(responsecode)
 
