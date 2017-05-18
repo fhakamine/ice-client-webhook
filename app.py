@@ -4,10 +4,6 @@ from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
 
-#from promosUrllib.parse import promosUrlparse, promosUrlencode
-#from promosUrllib.request import promosUrlopen, Request
-#from promosUrllib.error import HTTPError
-
 import json
 import os
 import urllib2
@@ -60,33 +56,27 @@ def createPromos(req):
 def readPromos(req):
     #getting environment variables
     promosApi = os.environ.get('PROMOS_API')
-    clientId = os.environ.get('CLIENT_ID')
-    clientSecret = os.environ.get('CLIENT_SECRET')
-    authzServer = os.environ.get('AUTHZ_SERVER')
-    print("Promos API:")
-    print(promosApi)
     promosUrl = promosApi+"/promos"
 
     parameters = req.get("result").get("parameters")
-    target = parameters.get("target")
+    promosUrl = promosUrl+"/"+parameters.get("target")
+    #print('API Call')
+    #print(promosUrl)
 
-    promosUrl = promosUrl+"/"+target
     querystring = {}
     payload = {}
 
     access_token = req.get("originalRequest").get("data").get("user").get("access_token")
     headers={'Authorization': 'Bearer '+access_token }
-    print(headers)
-
-    response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
-
-    print(response.text)
-    print('After request')
+    #print(headers)
 
     #perform the rest api call
+    response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
+
+    #print('After request')
     responsecode = response.status_code
     data = response.json()
-    print(data)
+    #print(data)
 
     #for promo in data:
         #print("promo code: ");

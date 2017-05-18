@@ -1,29 +1,15 @@
 {
   "name": "Ice Promos webhook",
-  "description": "Ice Promos webhook",
+  "description": "To make ICE customers happy",
+  "website": "https://www.okta.com/products/developer/",
   "repository": "https://github.com/fhakamine/apiai-client-webhook",
-  "logo": "http://xvir.github.io/img/apiai.png",
-  "keywords": ["api.ai", "natural language", "okta"],
+  "logo": "https://github.com/fhakamine/ice-client-webhook/blob/master/img/IceIcon_120px.png",
+  "keywords": ["API", "REST", "OAuth2", "Python", "Flask", "Okta", "Natural Language"],
   "env": {
     "PROMOS_API": {
       "description": "URL for the promos API",
       "required": true,
-      "value": "https://example.herokuapp.com"
-    },
-    "CLIENT_ID": {
-      "description": "The client id assigned to your app",
-      "required": true,
-      "value": "SuperLongCientId"
-    },
-    "CLIENT_SECRET": {
-      "description": "The client secret assigned to your app",
-      "required": true,
-      "value": "SuperLongClientSecret"
-    },
-    "AUTHZ_SERVER": {
-      "description": "Your OAuth authorization server url",
-      "required": true,
-      "value": "https://example.oktapreview.com"
+      "value": "https://ice-rs-fredericohakamine.herokuapp.com"
     }
   },
 }

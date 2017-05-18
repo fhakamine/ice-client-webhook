@@ -58,4 +58,7 @@ docs/_build/
 # PyBuilder
 target/
 
+# Heroku
+.env
+
 # Created by .ignore support plugin (hsz.mobi)
