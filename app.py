@@ -67,14 +67,14 @@ def readPromos(req):
     print(promosApi)
     promosUrl = promosApi+"/promos"
 
-    parameters = result.get("result").get("parameters")
+    parameters = req.get("result").get("parameters")
     target = parameters.get("target")
 
     promosUrl = promosUrl+"/"+target
     querystring = {}
     payload = {}
 
-    access_token = result.get("originalRequest").get("data").get("user").get("access_token")
+    access_token = req.get("originalRequest").get("data").get("user").get("access_token")
     headers={'Authorization': 'Bearer: '+access_token }
     print(headers)
 
