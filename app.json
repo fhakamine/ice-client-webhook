@@ -1,19 +1,29 @@
 {
-  "name": "API.AI user webhook demonstration",
-  "description": "API.AI user webhook demonstration",
-  "repository": "https://github.com/fhakamine/apiai-user-webhook-sample",
+  "name": "Ice Promos webhook",
+  "description": "Ice Promos webhook",
+  "repository": "https://github.com/fhakamine/apiai-client-webhook",
   "logo": "http://xvir.github.io/img/apiai.png",
-  "keywords": ["api.ai", "natural language"],
+  "keywords": ["api.ai", "natural language", "okta"],
   "env": {
-    "TENANT_URL": {
-      "description": "Your tenant url including the https protocol. For example: https://example.octopus.com",
+    "PROMOS_API": {
+      "description": "URL for the promos API",
+      "required": true,
+      "value": "https://example.herokuapp.com"
+    },
+    "CLIENT_ID": {
+      "description": "The client id assigned to your app",
+      "required": true,
+      "value": "SuperLongCientId"
+    },
+    "CLIENT_SECRET": {
+      "description": "The client secret assigned to your app",
+      "required": true,
+      "value": "SuperLongClientSecret"
+    },
+    "AUTHZ_SERVER": {
+      "description": "Your OAuth authorization server url",
       "required": true,
       "value": "https://example.oktapreview.com"
-    },
-    "API_KEY": {
-      "description": "The API key used by the webook to connect your tenant",
-      "required": true,
-      "value": "SuperLongAndBoringKey"
     }
   },
 }

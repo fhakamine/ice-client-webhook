@@ -4,13 +4,13 @@ from __future__ import print_function
 from future.standard_library import install_aliases
 install_aliases()
 
-#from urllib.parse import urlparse, urlencode
-#from urllib.request import urlopen, Request
-#from urllib.error import HTTPError
+#from promosUrllib.parse import promosUrlparse, promosUrlencode
+#from promosUrllib.request import promosUrlopen, Request
+#from promosUrllib.error import HTTPError
 
 import json
 import os
-import urllib2
+import promosUrllib2
 import requests
 
 from flask import Flask
@@ -30,12 +30,12 @@ def webhook():
 
     #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
-    if action == "addUser":
-        speech = addUser(req)
-    elif action == "modUser":
-        speech = modUser(req)
-    elif action == "resetUser":
-        speech = resetUser(req)
+    if action == "createPromos":
+        speech = createPromos(req)
+    elif action == "readPromos":
+        speech = readPromos(req)
+    elif action == "deletePromos":
+        speech = deletePromos(req)
     else:
         return {}
 
@@ -52,34 +52,32 @@ def webhook():
     return r
 
 #for creating new users in Okta
-def addUser(req):
-    baseurl = os.environ.get('TENANT_URL')
-    key = os.environ.get('API_KEY')
-    url = baseurl+"/api/v1/users"
+def createPromos(req):
+    speech = "Oops... I don't know how to create promos yet."
+    return speech
+
+#for read existing promos
+def readPromos(req):
+    #getting environment variables
+    promosApi = os.environ.get('PROMOS_API')
+    clientId = os.environ.get('CLIENT_ID')
+    clientSecret = os.environ.get('CLIENT_SECRET')
+    authzServer = os.environ.get('AUTHZ_SERVER')
+    promosUrl = promosApi+"/api/v1/users"
 
     result = req.get("result")
-    parameters = result.get("parameters")
-    firstName = parameters.get("given-name")
-    lastName = parameters.get("last-name")
-    email = parameters.get("email")
+    #parameters = result.get("parameters")
+    #firstName = parameters.get("given-name")
+    #lastName = parameters.get("last-name")
+    #email = parameters.get("email")
+    target = parameters.get("target").upper()
 
-    querystring = {"activate":"true"}
+    promosUrl = promosUrl+target
+    querystring = {}
+    payload = {}
+    headers = {}
 
-    payload = {
-        'profile': {
-            'firstName': firstName,
-            'lastName': lastName,
-            'email': email,
-            'login': email
-            }
-        }
-    headers = {
-        'accept': "application/json",
-        'content-type': "application/json",
-        'authorization': "SSWS "+key
-        }
-
-    response = requests.post(url, json=payload, headers=headers, params=querystring)
+    response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
 
     print(response.text)
     print('After request')
@@ -90,7 +88,7 @@ def addUser(req):
     print(data)
 
     if responsecode == 200:
-        speech = ""
+        speech = "We a special promo. "+data[0].description+". To get this promo, go to ice.cream.io and enter the code "+ data[0].response.code
     else:
         speech = "Error "+str(responsecode)
 
@@ -98,14 +96,9 @@ def addUser(req):
     print(speech)
     return speech
 
-#for modifying existing users
-def modUser(req):
-    speech = "Ops... I don't know how to update a user yet."
-    return speech
-
-#for resetting users
-def resetUser(req):
-    speech = "Ops... I don't know how to reset users yet."
+#for deleting promos
+def deletePromos(req):
+    speech = "Oops... I don't know how to reset users yet."
     return speech
 
 if __name__ == '__main__':
