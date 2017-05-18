@@ -28,6 +28,10 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
+    authz = request.headers['Authorization']
+    print("Authorization:")
+    print(authz)
+
     #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
     if action == "createPromos":
