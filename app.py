@@ -90,8 +90,8 @@ def readPromos(req):
     print(data)
 
     for promo in data:
-        print("desc: " + promo.description)
-        print("code: " + promo.code)
+        print("promo: ");
+        print(promo);
 
     if responsecode == 200:
         speech = "We a special promo. "+data[0].description+". To get this promo, go to ice.cream.io and enter the code "+ data[0].code
