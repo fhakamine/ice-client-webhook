@@ -28,10 +28,6 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    authz = request.headers.get('Authorization')
-    print("Authorization:")
-    print(authz)
-
     #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
     if action == "createPromos":
@@ -71,17 +67,16 @@ def readPromos(req):
     print(promosApi)
     promosUrl = promosApi+"/promos"
 
-    result = req.get("result")
-    parameters = result.get("parameters")
-    #firstName = parameters.get("given-name")
-    #lastName = parameters.get("last-name")
-    #email = parameters.get("email")
+    parameters = result.get("result").get("parameters")
     target = parameters.get("target")
 
     promosUrl = promosUrl+"/"+target
     querystring = {}
     payload = {}
-    headers = {}
+
+    access_token = result.get("originalRequest").get("data").get("user").get("access_token")
+    headers={'Authorization': 'Bearer: '+access_token }
+    print(headers)
 
     response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
 
