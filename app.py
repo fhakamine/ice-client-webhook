@@ -75,7 +75,7 @@ def readPromos(req):
     payload = {}
 
     access_token = req.get("originalRequest").get("data").get("user").get("access_token")
-    headers={'Authorization': 'Bearer: '+access_token }
+    headers={'Authorization': 'Bearer '+access_token }
     print(headers)
 
     response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
