@@ -63,16 +63,16 @@ def readPromos(req):
     clientId = os.environ.get('CLIENT_ID')
     clientSecret = os.environ.get('CLIENT_SECRET')
     authzServer = os.environ.get('AUTHZ_SERVER')
-    promosUrl = promosApi+"/api/v1/users"
+    promosUrl = promosApi+"/promos"
 
     result = req.get("result")
-    #parameters = result.get("parameters")
+    parameters = result.get("parameters")
     #firstName = parameters.get("given-name")
     #lastName = parameters.get("last-name")
     #email = parameters.get("email")
     target = parameters.get("target")
 
-    promosUrl = promosUrl+target
+    promosUrl = promosUrl+"/"+target
     querystring = {}
     payload = {}
     headers = {}
