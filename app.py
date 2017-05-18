@@ -70,7 +70,7 @@ def readPromos(req):
     #firstName = parameters.get("given-name")
     #lastName = parameters.get("last-name")
     #email = parameters.get("email")
-    target = parameters.get("target").upper()
+    target = parameters.get("target")
 
     promosUrl = promosUrl+target
     querystring = {}
