@@ -63,6 +63,8 @@ def readPromos(req):
     clientId = os.environ.get('CLIENT_ID')
     clientSecret = os.environ.get('CLIENT_SECRET')
     authzServer = os.environ.get('AUTHZ_SERVER')
+    print("Promos API:")
+    print(promosApi)
     promosUrl = promosApi+"/promos"
 
     result = req.get("result")
