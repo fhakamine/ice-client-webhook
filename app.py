@@ -10,7 +10,7 @@ install_aliases()
 
 import json
 import os
-import promosUrllib2
+import urllib2
 import requests
 
 from flask import Flask
