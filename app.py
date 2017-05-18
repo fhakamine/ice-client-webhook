@@ -29,7 +29,7 @@ def webhook():
     print(json.dumps(req, indent=4))
 
     #FIGURES OUT WHAT TO DO
-    action = req.get("result").get("action")
+    action = req.get("result").get("parameters").get("action")
     if action == "createPromos":
         speech = createPromos(req)
     elif action == "readPromos":
@@ -37,7 +37,7 @@ def webhook():
     elif action == "deletePromos":
         speech = deletePromos(req)
     else:
-        return {}
+        speech = "I don't understand you."
 
     res = {
             "speech": speech,
