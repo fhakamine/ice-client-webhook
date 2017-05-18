@@ -28,7 +28,7 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    authz = request.headers['Authorization']
+    authz = request.headers.get('Authorization')
     print("Authorization:")
     print(authz)
 
