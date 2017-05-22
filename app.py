@@ -66,7 +66,7 @@ def readPromos(req):
     querystring = {}
     payload = {}
 
-    access_token = req.get("originalRequest").get("data").get("user").get("access_token")
+    access_token = req.get("originalRequest").get("data").get("user").get("accessToken")
     headers={'Authorization': 'Bearer '+access_token }
     #print(headers)
 
