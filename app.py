@@ -6,7 +6,7 @@ install_aliases()
 
 import json
 import os
-import urllib3
+import urllib
 import requests
 
 from flask import Flask
