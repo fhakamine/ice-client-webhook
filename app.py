@@ -16,13 +16,19 @@ from flask import make_response
 # Flask app should start in global layout
 app = Flask(__name__)
 
+#INITIAL ROUTE
+@app.route('/')
+def itworks():
+    return "I translate requests from API.AI to "+os.environ.get('PROMOS_API')+"/promos"
 
+#POST:/WEBHOOK
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    #GET API.AI REQUEST
     req = request.get_json(silent=True, force=True)
-
-    print("Request:")
-    print(json.dumps(req, indent=4))
+    print("=== BEGIN: WHAT COMES FROM API AI? ===")
+    print(json.dumps(req, indent=2))
+    print("=== BEGIN: WHAT COMES FROM API AI? ===")
 
     #FIGURES OUT WHAT TO DO
     action = req.get("result").get("action")
@@ -35,67 +41,57 @@ def webhook():
     else:
         speech = "I don't understand you."
 
+    #RETURN RESPONSE
     res = {
             "speech": speech,
             "displayText": speech,
             "source": "apiai-user-webhook-sample"
           }
-
-    res = json.dumps(res, indent=4)
-    # print(res)
+    res = json.dumps(res, indent=2)
+    print("=== BEGIN: WHAT GOES BACK TO API AI? ===")
+    print(res)
+    print("=== BEGIN: WHAT GOES BACK TO API AI? ===")
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
 
-#for creating new users in Okta
+#FOR CREATING NEW PROMOS
 def createPromos(req):
     speech = "Oops... I don't know how to create promos yet."
     return speech
 
-#for read existing promos
+#FOR DELETING EXISTING PROMOS
+def deletePromos(req):
+    speech = "Oops... I don't know how to delete promos yet."
+    return speech
+
+#FOR GETTING THE CURRENT PROMOS
 def readPromos(req):
-    #getting environment variables
     promosApi = os.environ.get('PROMOS_API')
     promosUrl = promosApi+"/promos"
-
     parameters = req.get("result").get("parameters")
     promosUrl = promosUrl+"/"+parameters.get("target")
-    #print('API Call')
-    #print(promosUrl)
-
     querystring = {}
     payload = {}
 
+    #LOOKING FOR AN ACCESS TOKEN
     access_token = req.get("originalRequest").get("data").get("user").get("accessToken")
-    headers={'Authorization': 'Bearer '+access_token }
-    #print(headers)
+    if !(access_token is None or access_token == "")
+        headers={'Authorization': 'Bearer '+access_token }
 
-    #perform the rest api call
+    #CALL THE PROMOS API
     response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
-
-    #print('After request')
     responsecode = response.status_code
     data = response.json()
-    #print(data)
-
-    #for promo in data:
-        #print("promo code: ");
-        #print(promo);
 
     if responsecode == 200:
+        #RETURN THE FIRST PROMO THAT SHOWS UP
         speech = "We a special promo. "+data[0].get("description")+". To get this promo, go to ice.cream.io and enter the code "+ data[0].get("code")
     else:
         speech = "Error "+str(responsecode)
-
-    print("Response:")
-    print(speech)
     return speech
 
-#for deleting promos
-def deletePromos(req):
-    speech = "Oops... I don't know how to reset users yet."
-    return speech
-
+#LISTENER
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print("Starting app on port %d" % port)
