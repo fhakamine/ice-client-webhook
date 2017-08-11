@@ -78,7 +78,7 @@ def readPromos(req):
     #LOOKING FOR AN ACCESS TOKEN
     access_token = req.get("originalRequest").get("data").get("user").get("accessToken")
     if access_token in ('', None):
-       #NO HEADER
+       print("no headers")
     else:
        headers={'Authorization': 'Bearer '+access_token }
 
