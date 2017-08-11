@@ -76,7 +76,7 @@ def readPromos(req):
 
     #LOOKING FOR AN ACCESS TOKEN
     access_token = req.get("originalRequest").get("data").get("user").get("accessToken")
-    if !(access_token is None or access_token == "")
+    if !(access_token is None | access_token == "")
         headers={'Authorization': 'Bearer '+access_token }
 
     #CALL THE PROMOS API
