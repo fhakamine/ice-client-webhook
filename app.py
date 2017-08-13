@@ -22,7 +22,7 @@ def itworks():
     return "I translate requests from API.AI to "+os.environ.get('PROMOS_API')+"/promos"
 
 #POST:/WEBHOOK
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook', methods=['POST', 'GET'])
 def webhook():
     #GET API.AI REQUEST
     req = request.get_json(silent=True, force=True)
