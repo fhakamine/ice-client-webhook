@@ -77,10 +77,10 @@ def readPromos(req):
 
     #LOOKING FOR AN ACCESS TOKEN
     originalRequest = req.get("originalRequest")
-    if originalRequest in ('', None):
-       print("no headers")
-    else:
-       headers={'Authorization': 'Bearer '+originalRequest.get("data").get("user").get("accessToken") }
+    if originalRequest not in ('', None):
+      access_token = originalRequest.get("data").get("user").get("accessToken");
+      if access_token not in ('', None):
+        headers={'Authorization': 'Bearer '+access_token }
 
     #CALL THE PROMOS API
     response = requests.get(promosUrl, json=payload, headers=headers, params=querystring)
