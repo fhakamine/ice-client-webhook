@@ -89,7 +89,7 @@ def readPromos(req):
 
     if responsecode == 200:
         #RETURN THE FIRST PROMO THAT SHOWS UP
-        speech = "We a special promo. "+data[0].get("description")+". To get this promo, go to ice.cream.io and enter the code "+ data[0].get("code")
+        speech = "We have a special promo. "+data[0].get("description")+". To get this promo, go to ice.cream.io and enter the code "+ data[0].get("code")
     else:
         speech = "Error "+str(responsecode)
     return speech
